@@ -1,8 +1,13 @@
 import pandas as pd
+import numpy as np
 
 import lightgbm as lgb
 
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
+
+from . import file
 
 
 def lgbm_preprocessing(datas, mode='training', features_list=None):
@@ -43,10 +48,23 @@ def lgbm_preprocessing(datas, mode='training', features_list=None):
     return values, labels
 
 
-def split_and_dataset(values, labels):
-    X_train, X_test, y_train, y_test = train_test_split(values, labels,
+def split_modeling(values, labels):
+    x_train, x_test, y_train, y_test = train_test_split(values, labels,
                                                         test_size=0.1, random_state=19, stratify=labels)
-    trains = lgb.Dataset(X_train, y_train)
-    valids = lgb.Dataset(X_test, y_test)
+    trains = lgb.Dataset(x_train, y_train)
+    valids = lgb.Dataset(x_test, y_test)
 
-    return trains, valids
+    params = {
+        "objective": "multiclass",
+        "num_class": 3,
+        "metrics": "multi_logloss",
+        'force_row_wise': True,
+        "learning_rate": 0.2
+
+    }
+
+    model = lgb.train(params, trains, valid_sets=valids, num_boost_round=1000, early_stopping_rounds=100)
+
+    return x_train, x_test, y_train, y_test, model
+
+
