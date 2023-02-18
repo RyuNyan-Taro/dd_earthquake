@@ -2,8 +2,9 @@
 This repository is module for Richter's Predictor: Modeling Earthquake Damage competition in DrivenData.
 
 ref:https://www.drivendata.org/competitions/57/nepal-earthquake/page/134/
-
-# simply useful columns
+# Score record
+## Bench mark: 0.5815
+## Used simply useful columns: 0.6768
 - geo_level_1_id
 - height_percentage
 - has_superstructure_adobe_mud
