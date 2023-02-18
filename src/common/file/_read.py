@@ -15,4 +15,4 @@ def read_data(data_suffix: str) -> pd.DataFrame or ValueError:
         return pd.read_csv(DATA_DIR / 'submission_format.csv', index_col='building_id')
 
     # Return error if other data_suffix is selected
-    raise ValueError('You must select {training, test} as train_test.')
+    raise ValueError('You must select {train, test} as train_test.')
