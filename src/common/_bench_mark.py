@@ -1,10 +1,12 @@
 import pandas as pd
-from pathlib import Path
+
 # ML
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import GridSearchCV
+
+from . import file
 
 
 def select_columns(df: pd.DataFrame, features_mode: str, features_list: list) -> pd.DataFrame:
@@ -32,9 +34,7 @@ def pred_bench_mark(features_mode: str = 'select', features_list=None):
     Submitted DataFrame
 
     """
-    DATA_DIR = Path('..', '..', '..', 'data', 'final', 'public')
-    train_values = pd.read_csv(DATA_DIR / 'train_values.csv', index_col='building_id')
-    train_labels = pd.read_csv(DATA_DIR / 'train_labels.csv', index_col='building_id')
+    train_values, train_labels = file.read_data('training')
 
     # set of feature columns to use
     if features_list is None:
@@ -57,11 +57,11 @@ def pred_bench_mark(features_mode: str = 'select', features_list=None):
     gs.fit(train_values_subset, train_labels.values.ravel())
 
     # predict and submit
-    test_values = pd.read_csv(DATA_DIR / 'test_values.csv', index_col='building_id')
+    test_values = file.read_data('test')
 
     test_values_subset = select_columns(test_values, features_mode, features_list)
     predictions = gs.predict(test_values_subset)
-    submission_format = pd.read_csv(DATA_DIR / 'submission_format.csv', index_col='building_id')
+    submission_format = file.read_data('submission')
     my_submission = pd.DataFrame(data=predictions,
                                  columns=submission_format.columns,
                                  index=submission_format.index)
