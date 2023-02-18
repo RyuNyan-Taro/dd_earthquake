@@ -7,20 +7,42 @@ from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import GridSearchCV
 
 
-def pred_bench_mark(selected_features=None):
+def pred_bench_mark(features_mode: str = 'select', features_list=None):
+    """
+    Act fit, predict and return submit which is the same process as bench_mark.
+
+    Parameters
+    ----------
+    features_mode : {'select', ''drop}, optional
+        Select using or dropping features_list columns.
+    features_list : list of str
+        Columns list of DataFrame.
+
+    Returns
+    -------
+    Submitted DataFrame
+
+    """
     DATA_DIR = Path('..', '..', '..', 'data', 'final', 'public')
     train_values = pd.read_csv(DATA_DIR / 'train_values.csv', index_col='building_id')
     train_labels = pd.read_csv(DATA_DIR / 'train_labels.csv', index_col='building_id')
 
     # set of feature columns to use
-    if selected_features is None:
-        selected_features = ['foundation_type',
-                             'area_percentage',
-                             'height_percentage',
-                             'count_floors_pre_eq',
-                             'land_surface_condition',
-                             'has_superstructure_cement_mortar_stone']
-    train_values_subset = pd.get_dummies(train_values[selected_features])
+    if features_list is None:
+        features_list = ['foundation_type',
+                         'area_percentage',
+                         'height_percentage',
+                         'count_floors_pre_eq',
+                         'land_surface_condition',
+                         'has_superstructure_cement_mortar_stone']
+
+    # select of drop features_list columns
+    if features_mode == 'select':
+        train_values_subset = pd.get_dummies(train_values[features_list])
+    elif features_mode == 'drop':
+        train_values_subset = pd.get_dummies(train_values.drop(columns=features_list))
+    else:
+        raise ValueError(f'{features_mode} is not defined as a features_mode.')
 
     # fit data to model
     pipe = make_pipeline(StandardScaler(),
