@@ -14,3 +14,4 @@ ref:https://www.drivendata.org/competitions/57/nepal-earthquake/page/134/
 - foundation_type
 - roof_type
 - ground_floor_type
+## add level_2 and 3: 0.7280
