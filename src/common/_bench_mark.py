@@ -7,6 +7,15 @@ from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import GridSearchCV
 
 
+def select_columns(df: pd.DataFrame, features_mode: str, features_list: list) -> pd.DataFrame:
+    if features_mode == 'select':
+        return pd.get_dummies(df[features_list])
+    elif features_mode == 'drop':
+        return pd.get_dummies(df.drop(columns=features_list))
+    else:
+        raise ValueError(f'{features_mode} is not defined as a features_mode.')
+
+
 def pred_bench_mark(features_mode: str = 'select', features_list=None):
     """
     Act fit, predict and return submit which is the same process as bench_mark.
@@ -37,12 +46,7 @@ def pred_bench_mark(features_mode: str = 'select', features_list=None):
                          'has_superstructure_cement_mortar_stone']
 
     # select of drop features_list columns
-    if features_mode == 'select':
-        train_values_subset = pd.get_dummies(train_values[features_list])
-    elif features_mode == 'drop':
-        train_values_subset = pd.get_dummies(train_values.drop(columns=features_list))
-    else:
-        raise ValueError(f'{features_mode} is not defined as a features_mode.')
+    train_values_subset = select_columns(train_values, features_mode, features_list)
 
     # fit data to model
     pipe = make_pipeline(StandardScaler(),
@@ -54,7 +58,8 @@ def pred_bench_mark(features_mode: str = 'select', features_list=None):
 
     # predict and submit
     test_values = pd.read_csv(DATA_DIR / 'test_values.csv', index_col='building_id')
-    test_values_subset = pd.get_dummies(test_values[selected_features])
+
+    test_values_subset = select_columns(test_values, features_mode, features_list)
     predictions = gs.predict(test_values_subset)
     submission_format = pd.read_csv(DATA_DIR / 'submission_format.csv', index_col='building_id')
     my_submission = pd.DataFrame(data=predictions,
