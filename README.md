@@ -15,3 +15,14 @@ ref:https://www.drivendata.org/competitions/57/nepal-earthquake/page/134/
 - roof_type
 - ground_floor_type
 ## add level_2 and 3: 0.7280
+## Select used columns from bar plot
+- dropped columns
+  - age
+  - plan_configuration
+  - has_secondary_use_institution
+  - has_secondary_use_school
+  - has_secondary_use_industry
+  - has_secondary_use_health_post
+  - has_secondary_use_gov_office
+  - has_secndary_use_use_police
+  - has_secondary_use_other
