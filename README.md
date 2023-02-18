@@ -26,4 +26,5 @@ ref:https://www.drivendata.org/competitions/57/nepal-earthquake/page/134/
   - has_secondary_use_gov_office
   - has_secondary_use_use_police
   - has_secondary_use_other
+  
 ## Used Light GBM model with some preprocessing: 0.7424
