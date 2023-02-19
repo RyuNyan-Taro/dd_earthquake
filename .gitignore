@@ -4,3 +4,7 @@
 /book/.ipynb_checkpoints/compare_model-checkpoint.ipynb
 /book/.ipynb_checkpoints/Right_GBM-checkpoint.ipynb
 /book/.ipynb_checkpoints/Light_GBM-checkpoint.ipynb
+/book/catboost_info/catboost_training.json
+/book/catboost_info/learn/events.out.tfevents
+/book/catboost_info/learn_error.tsv
+/book/catboost_info/time_left.tsv
