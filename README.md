@@ -28,3 +28,6 @@ ref:https://www.drivendata.org/competitions/57/nepal-earthquake/page/134/
   - has_secondary_use_other
   
 ## Used Light GBM model with some preprocessing: 0.7424
+## Light GBm with high related features and modified parameters: 0.7439
+- already upper limit to up score by modifying parameter
+- modifying features is useful to over the upper limit, I think.
