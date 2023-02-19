@@ -35,7 +35,7 @@ def lgbm_preprocessing(datas, mode='training', features_list=None):
                          'ground_floor_type']
     trian_values = pd.get_dummies(values[features_list])
 
-    # convert obkect to category
+    # convert object to category
     for _col in values.select_dtypes(include='object'):
         values[_col] = values[_col].astype("category")
 
