@@ -10,8 +10,8 @@ from sklearn.metrics import accuracy_score
 from . import file
 
 
-def lgbm_preprocessing(datas, mode='training', features_list=None):
-    if mode == 'training':
+def lgbm_preprocessing(datas, mode: str = 'train', features_list=None):
+    if mode == 'train':
         values = datas[0]
         labels = datas[1]
     elif mode == 'test':
