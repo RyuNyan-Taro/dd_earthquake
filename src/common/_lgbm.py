@@ -1,16 +1,38 @@
+from typing import Tuple, Any, Iterable
+
 import pandas as pd
 import numpy as np
 
 import lightgbm as lgb
+from pandas._typing import NDFrameT
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 
 from . import file
+from pandas import DataFrame, Series
 
 
-def lgbm_preprocessing(datas, mode: str = 'train', features_list=None):
+def lgbm_preprocessing(datas: list[DataFrame, DataFrame] or DataFrame, mode: str = 'train', features_list=None) -> \
+        tuple[DataFrame | Iterable[DataFrame] | Any, int | None | Any]:
+    """
+    Preprocessing for lgbm.
+
+    Parameters
+    ----------
+    datas : DataFrame or list of DataFrame
+        Input data
+    mode : {'train', 'test'}, optional
+        train returns values and label, and test returns values
+    features_list : None or list of str
+        List orf columns to use as features.
+
+    Returns
+    -------
+    DataFrame of preprocessed
+
+    """
     if mode == 'train':
         values = datas[0]
         labels = datas[1]
@@ -95,6 +117,3 @@ def predict_submit(x_test, y_test, model):
                                  index=submission_format.index)
 
     return my_submission
-
-
-
