@@ -32,3 +32,4 @@ ref:https://www.drivendata.org/competitions/57/nepal-earthquake/page/134/
 - already upper limit to up score by modifying parameter
 - modifying features is useful to over the upper limit, I think.
 ## add new features: 0.7415
+## gridsearch and  modified parameter: 0.7454
