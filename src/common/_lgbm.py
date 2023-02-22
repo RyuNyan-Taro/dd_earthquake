@@ -12,8 +12,7 @@ from . import file
 from pandas import DataFrame, Series
 
 
-def lgbm_preprocessing(datas: list[DataFrame, DataFrame] or DataFrame, mode: str = 'train', features_list=None) -> \
-        tuple[DataFrame | Iterable[DataFrame] | Any, int | None | Any]:
+def lgbm_preprocessing(datas: list[DataFrame, DataFrame] or DataFrame, mode: str = 'train', features_list=None) :
     """
     Preprocessing for lgbm.
 
