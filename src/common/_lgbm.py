@@ -9,10 +9,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 from . import file
-from pandas import DataFrame, Series
+from pandas import DataFrame
 
 
-def lgbm_preprocessing(datas: list[DataFrame, DataFrame] or DataFrame, mode: str = 'train', features_list=None) :
+def lgbm_preprocessing(datas, mode: str = 'train', features_list=None) :
     """
     Preprocessing for lgbm.
 
