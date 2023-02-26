@@ -6,10 +6,20 @@ import numpy as np
 import lightgbm as lgb
 
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, f1_score
 
 from . import file
 from pandas import DataFrame
+
+
+def f1(y_true, y_pred):
+    """
+    ref: https://qiita.com/ground0state/items/1b7cf1977426bd8f0f28
+    """
+    N_LABELS = 3  # ラベルの数
+    y_pred_ = y_pred.reshape(N_LABELS, len(y_pred) // N_LABELS).argmax(axis=0)
+    score = f1_score(y_true, y_pred_, average='micro')
+    return 'f1', score, True
 
 
 def lgbm_preprocessing(datas, mode: str = 'train', features_list=None):
