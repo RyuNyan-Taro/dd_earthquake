@@ -86,7 +86,7 @@ def split_datas(values, labels):
     return train_test_split(values, labels,  test_size=0.1, random_state=19, stratify=labels)
 
 
-def modeling_datas(X_train, X_test, y_train, y_test):
+def modeling_datas(X_train, X_test, y_train, y_test, n_estimators=20000, early_stopping=1000):
     params = {
         "objective": "multiclass",
         "num_class": 3,
@@ -95,14 +95,14 @@ def modeling_datas(X_train, X_test, y_train, y_test):
         'reg_alpha': 0.3,
         'reg_lambda': 0.3,
         'metric': None,
-        'n_estimators': 1000,
+        'n_estimators': n_estimators,
     }
 
     # model = lgb.train(params, trains, valid_sets=valids, num_boost_round=1000, early_stopping_rounds=100)
     model = lgb.LGBMClassifier(**params)
     model.fit(X_train, y_train,
               eval_set=[(X_test, y_test)],
-              early_stopping_rounds=100,
+              early_stopping_rounds=early_stopping,
               eval_metric=f1)
 
     return model
@@ -136,7 +136,7 @@ def predict_submit(x_test, y_test, model):
     test_values, _ = lgbm_preprocessing(test_values, mode='test')
     y_test = model.predict(test_values)
     submission_format = file.read_data('submission')
-    my_submission = pd.DataFrame(data=y_test,
+    my_submission = pd.DataFrame(data=y_test+1,
                                  columns=submission_format.columns,
                                  index=submission_format.index)
 
