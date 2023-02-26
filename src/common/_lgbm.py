@@ -82,12 +82,11 @@ def lgbm_preprocessing(datas, mode: str = 'train', features_list=None):
     return values, labels
 
 
-def split_modeling(values, labels):
-    X_train, X_test, y_train, y_test = train_test_split(values, labels,
-                                                        test_size=0.1, random_state=19, stratify=labels)
-    # trains = lgb.Dataset(X_train, y_train)
-    # valids = lgb.Dataset(X_test, y_test)
+def split_datas(values, labels):
+    return train_test_split(values, labels,  test_size=0.1, random_state=19, stratify=labels)
 
+
+def modeling_datas(X_train, X_test, y_train, y_test):
     params = {
         "objective": "multiclass",
         "num_class": 3,
@@ -105,6 +104,16 @@ def split_modeling(values, labels):
               eval_set=[(X_test, y_test)],
               early_stopping_rounds=100,
               eval_metric=f1)
+
+    return model
+
+
+def split_modeling(values, labels):
+    X_train, X_test, y_train, y_test = split_datas(values, labels)
+    # trains = lgb.Dataset(X_train, y_train)
+    # valids = lgb.Dataset(X_test, y_test)
+
+    model = modeling_datas( X_train, X_test, y_train, y_test)
 
     return X_train, X_test, y_train, y_test, model
 
