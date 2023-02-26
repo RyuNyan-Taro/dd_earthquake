@@ -118,8 +118,7 @@ def split_modeling(values, labels):
     return X_train, X_test, y_train, y_test, model
 
 
-def predict_submit(x_test, y_test, model):
-    # predict of test data
+def predict_model(x_test, y_test, model):
     y_pred = model.predict(x_test)
 
     # print of true and predict
@@ -130,6 +129,11 @@ def predict_submit(x_test, y_test, model):
     f1_value = f1(y_test, y_pred)
     print('Acc :', acc)
     print('f1_score:', f1_value)
+
+
+def predict_submit(x_test, y_test, model):
+    # predict the model
+    predict_model(x_test, y_test, model)
 
     # submit the model
     test_values = file.read_data('test')
