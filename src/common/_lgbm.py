@@ -12,7 +12,7 @@ from . import file
 from pandas import DataFrame
 
 
-def lgbm_preprocessing(datas, mode: str = 'train', features_list=None) :
+def lgbm_preprocessing(datas, mode: str = 'train', features_list=None):
     """
     Preprocessing for lgbm.
 
@@ -44,15 +44,20 @@ def lgbm_preprocessing(datas, mode: str = 'train', features_list=None) :
         features_list = ['geo_level_1_id',
                          'geo_level_2_id',
                          'geo_level_3_id',
+                         'age',
+                         'area_percentage',
                          'height_percentage',
-                         'has_superstructure_adobe_mud',
-                         'has_superstructure_mud_mortar_stone',
-                         'has_superstructure_rc_non_engineered',
-                         'has_superstructure_timber',
                          'foundation_type',
                          'roof_type',
-                         'ground_floor_type']
-    trian_values = pd.get_dummies(values[features_list])
+                         'ground_floor_type',
+                         'other_floor_type',
+                         'position',
+                         'has_superstructure_mud_mortar_stone',
+                         'has_superstructure_cement_mortar_brick',
+                         'has_superstructure_timber',
+                         'count_families',
+                         'has_secondary_use']
+    values = pd.get_dummies(values[features_list])
 
     # convert object to category
     for _col in values.select_dtypes(include='object'):
