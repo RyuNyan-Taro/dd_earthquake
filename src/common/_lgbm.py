@@ -81,10 +81,12 @@ def split_modeling(values, labels):
     params = {
         "objective": "multiclass",
         "num_class": 3,
-        "metrics": "multi_logloss",
         'force_row_wise': True,
-        "learning_rate": 0.2
-
+        "learning_rate": 0.15,
+        'reg_alpha': 0.3,
+        'reg_lambda': 0.3,
+        'metric': None,
+        'n_estimators': 1000,
     }
 
     model = lgb.train(params, trains, valid_sets=valids, num_boost_round=1000, early_stopping_rounds=100)
