@@ -69,10 +69,6 @@ def lgbm_preprocessing(datas, mode: str = 'train', features_list=None):
                          'has_secondary_use']
     values = pd.get_dummies(values[features_list])
 
-    # convert object to category
-    for _col in values.select_dtypes(include='object'):
-        values[_col] = values[_col].astype("category")
-
     if labels is None:
         pass
     # convert labels range [1, 4) -> [0, 3)
