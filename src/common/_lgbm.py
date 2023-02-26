@@ -111,27 +111,23 @@ def split_modeling(values, labels):
 
 def predict_submit(x_test, y_test, model):
     # predict of test data
-    y_pred_prob = model.predict(x_test)
-    y_pred = np.argmax(y_pred_prob, axis=1)
+    y_pred = model.predict(x_test)
 
     # print of true and predict
     df_pred = pd.DataFrame({'target': y_test['damage_grade'].values, 'target_pred': y_pred})
     print(df_pred)
-    df_pred_prob = pd.DataFrame(
-        {'y': y_test['damage_grade'].values, 'target0_prob': y_pred_prob[:, 0], 'target1_prob': y_pred_prob[:, 1],
-         'target2_prob': y_pred_prob[:, 2]})
-    print(df_pred_prob)
 
     acc = accuracy_score(y_test, y_pred)
+    f1_value = f1(y_test, y_pred)
     print('Acc :', acc)
+    print('f1_score:', f1_value)
 
     # submit the model
     test_values = file.read_data('test')
     test_values, _ = lgbm_preprocessing(test_values, mode='test')
-    y_test_prob = model.predict(test_values)
-    y_test = np.argmax(y_test_prob, axis=1)
+    y_test = model.predict(test_values)
     submission_format = file.read_data('submission')
-    my_submission = pd.DataFrame(data=y_test + 1,
+    my_submission = pd.DataFrame(data=y_test,
                                  columns=submission_format.columns,
                                  index=submission_format.index)
 
