@@ -91,7 +91,7 @@ def modeling_datas(X_train, X_test, y_train, y_test, n_estimators=20000, early_s
         'reg_alpha': 0.3,
         'reg_lambda': 0.3,
         'metric': None,
-        'n_estimators': n_estimators,
+        'n_estimators': n_estimators
     }
 
     # model = lgb.train(params, trains, valid_sets=valids, num_boost_round=1000, early_stopping_rounds=100)
@@ -114,17 +114,16 @@ def split_modeling(values, labels):
     return X_train, X_test, y_train, y_test, model
 
 
-def predict_model(x_test, y_test, model):
+def predict_model(x_test, y_test, model, return_score=False):
     y_pred = model.predict(x_test)
 
-    # print of true and predict
-    df_pred = pd.DataFrame({'target': y_test['damage_grade'].values, 'target_pred': y_pred})
-    print(df_pred)
-
     acc = accuracy_score(y_test, y_pred)
-    f1_value = f1(y_test, y_pred)
+    f1_value = f1_score(y_test, y_pred, average='micro')
     print('Acc :', acc)
     print('f1_score:', f1_value)
+
+    if return_score:
+        return acc, f1_value
 
 
 def predict_submit(x_test, y_test, model):
